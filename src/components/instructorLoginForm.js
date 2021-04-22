@@ -3,21 +3,21 @@ import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import * as yup from 'yup';
 
 
-const clientLoginForm = ({ submitClient }) => {
+const instructorLoginForm = ({ submitInstructor }) => {
     const [formState, setFormState] = useState({
-        username: '',
+        instructorId: '',
         password: '',
     })
 
     const [errors, setErrors] = useState({
-        username: '',
+        instructorId: '',
         password: '',
     })
 
     const [disabled, setDisabled] = useState(true)
 
-    const clientLoginSchema = yup.object().shape({
-        username: yup.string().required('Username is required!'),
+    const instructorLoginSchema = yup.object().shape({
+        instructorId: yup.string().required('instructorId is required!'),
         password: yup
             .string()
             .required('Password is required!')
@@ -25,7 +25,7 @@ const clientLoginForm = ({ submitClient }) => {
     })
 
     const validateChange = (event) => {
-        yup.reach(clientLoginSchema, event.target.name)
+        yup.reach(instructorLoginSchema, event.target.name)
             .validate(event.target.value)
             .then((valid) => {
                 setErrors({ ...errors, [event.target.name]: '' })
@@ -37,7 +37,7 @@ const clientLoginForm = ({ submitClient }) => {
     }
 
     useEffect(() => {
-        clientLoginSchema.isValid(formState).then((valid) => {
+        instructorLoginSchema.isValid(formState).then((valid) => {
             console.log('valid?', valid)
             setDisabled(!valid)
         })
@@ -53,30 +53,30 @@ const clientLoginForm = ({ submitClient }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        submitClient(formState)
-        submitClient(formState)
+        submitInstructor(formState)
+        submitInstructor(formState)
         setFormState({
-            username: '',
+            instructorId: '',
             password: '',
         })
     }
 
     return(
         <Form onSubmit={handleSubmit}>
-            <h1>Returning Client</h1>
+            <h1>Instructor Login</h1>
             <FormGroup>
-                <Label htmlFor='username'>Username</Label>
+                <Label htmlFor='instructorId'>Instructor Id</Label>
                 <Input
                     type='text'
-                    name='username'
-                    id='username'
-                    placeholder='username'
-                    value={formState.username}
+                    name='instructorId'
+                    id='instructorId'
+                    placeholder='instructorId'
+                    value={formState.instructorId}
                     onChange={handleChange}
-                    cy-data='username'
+                    cy-data='instructorId'
                 />
                 {error.name.length > 0 ? (
-                    <p className='error'>{errors.username}</p>
+                    <p className='error'>{errors.instructorId}</p>
                 ): null}
             </FormGroup>
             <FormGroup>
@@ -90,7 +90,7 @@ const clientLoginForm = ({ submitClient }) => {
                     onChange={handleChange}
                     cy-data='password'
                 />
-                {errors.password.lenght > 0 ? (
+                {errors.password.length > 0 ? (
                     <p className='error'>{errors.password}</p>
                 ): null}
             </FormGroup>
@@ -105,4 +105,4 @@ const clientLoginForm = ({ submitClient }) => {
     )
 }
 
-export default clientLoginForm;
+export default instructorLoginForm;
