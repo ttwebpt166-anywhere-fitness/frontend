@@ -9,9 +9,16 @@
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.3",
     "react-scripts": "4.0.3",
+<<<<<<< HEAD
     "web-vitals": "^1.1.1",
     "yup": "^0.32.9"
+=======
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "web-vitals": "^1.1.1"
+>>>>>>> 07a0f9d7ae068e090518908e1137becafc877146
   },
   "scripts": {
     "start": "react-scripts start",
