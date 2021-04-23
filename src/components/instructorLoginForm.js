@@ -59,6 +59,18 @@ const instructorLoginForm = ({ submitInstructor }) => {
             instructorId: '',
             password: '',
         })
+
+    const [post, setPost] = useState([])
+
+    axios
+        .post('https://anywhere-fitness-server.herokuapp.com/v1/', user)
+        .then((response) => {
+            setPost(response.data)
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     return(

@@ -3,7 +3,7 @@ import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import * as yup from 'yup';
 
 
-const instructorRegisterForm = ({ submitClient }) => {
+const instructorRegisterForm = ({ submitInstructorReg }) => {
     const [formState, setFormState] = useState({
         instructorId: '',
         gymCode: '',
@@ -64,14 +64,26 @@ const instructorRegisterForm = ({ submitClient }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        submitClient(formState)
-        submitClient(formState)
+        submitInstructorReg(formState)
+        submitInstructorReg(formState)
         setFormState({
             instructorId: '',
             gymCode: '',
             password: '',
             confirmpassword: '',
             terms: '',
+        })
+    
+    const [post, setPost] = useState([])
+
+    axios
+        .post('https://anywhere-fitness-server.herokuapp.com/v1/', user)
+        .then((response) => {
+            setPost(response.data)
+            console.log(response.data)
+        })
+        .catch((error) => {
+            console.log(error)
         })
     }
 
