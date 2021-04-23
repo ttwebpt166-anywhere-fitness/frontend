@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import * as yup from 'yup';
+import axios from 'axios'
 
-
-const instructorRegisterForm = ({ submitInstructorReg }) => {
+const InstructorRegisterForm = ({ submitInstructorReg }) => {
     const [formState, setFormState] = useState({
         instructorId: '',
         gymCode: '',
@@ -59,9 +59,11 @@ const instructorRegisterForm = ({ submitInstructorReg }) => {
         validateChange(event)
         if (event.target.name === true){
             setFormState({ ...formState, [event.target.name]: event.target.value })
-        }else false
+        }
+        //else false
     }
-
+    const [post, setPost] = useState([])
+    
     const handleSubmit = (event) => {
         event.preventDefault()
         submitInstructorReg(formState)
@@ -74,7 +76,6 @@ const instructorRegisterForm = ({ submitInstructorReg }) => {
             terms: '',
         })
     
-    const [post, setPost] = useState([])
 
     axios
         .post('https://anywhere-fitness-server.herokuapp.com/v1/', user)
@@ -172,4 +173,4 @@ const instructorRegisterForm = ({ submitInstructorReg }) => {
     )
 }
 
-export default instructorRegisterForm;
+export default InstructorRegisterForm;

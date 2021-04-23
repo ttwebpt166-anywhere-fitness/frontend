@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Form, FormGroup, Input, Label, Button } from 'reactstrap';
 import * as yup from 'yup';
+import axios from 'axios'
 
-
-const clientLoginForm = ({ submitClient }) => {
+const ClientLoginForm = ({ submitClient }) => {
     const [formState, setFormState] = useState({
         username: '',
         password: '',
@@ -48,9 +48,11 @@ const clientLoginForm = ({ submitClient }) => {
         validateChange(event)
         if (event.target.name === true){
             setFormState({ ...formState, [event.target.name]: event.target.value })
-        }else false
+        }
+        //else false
     }
-
+    const [post, setPost] = useState([])
+    
     const handleSubmit = (event) => {
         event.preventDefault()
         submitClient(formState)
@@ -60,7 +62,7 @@ const clientLoginForm = ({ submitClient }) => {
             password: '',
         })
 
-    const [post, setPost] = useState([])
+    
 
     axios
     .post('https://anywhere-fitness-server.herokuapp.com/v1/', user)
@@ -93,7 +95,6 @@ const clientLoginForm = ({ submitClient }) => {
             </FormGroup>
             <FormGroup>
                 <Label htmlFor='password'>Password</Label>
-                <Input
                     type='password'
                     name='password'
                     id='password'
@@ -117,4 +118,4 @@ const clientLoginForm = ({ submitClient }) => {
     )
 }
 
-export default clientLoginForm;
+export default ClientLoginForm;
