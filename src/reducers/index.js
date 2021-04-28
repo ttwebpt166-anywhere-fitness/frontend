@@ -1,5 +1,11 @@
 import { combineReducers } from "redux";
-import { LOGGING_IN, LOGIN_SUCCESS, LOGIN_FAIL } from "../actions";
+import {
+  LOGGING_IN,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  ADD_CLASS,
+  SET_ERROR,
+} from "../actions";
 
 let initialState = {
   test: "test piece o' state",
@@ -18,7 +24,7 @@ function userReducer(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
       console.log("action payload", action.payload);
-      return { ...state, data: action.payload };
+      return { ...state, data: action.payload, isLoading: false, error: "" };
 
     case LOGIN_FAIL:
       return {
@@ -26,6 +32,25 @@ function userReducer(state = initialState, action) {
         isLoading: false,
         error: action.payload,
         data: undefined,
+      };
+    case ADD_CLASS:
+      return {
+        ...state,
+        smurfs: [
+          ...state.smurfs,
+          {
+            id: Date.now(),
+            name: action.payload.name,
+            nickname: action.payload.nickname,
+            position: action.payload.position,
+            description: action.payload.description,
+          },
+        ],
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;
