@@ -1,0 +1,38 @@
+export const sampleClass = {
+  renter_id: "",
+  title: "",
+  description: "",
+  type: "",
+  street_address: "",
+  city: "",
+  state: "",
+  location: "",
+  guests: "",
+  bedrooms: "",
+  beds: "",
+  baths: "",
+  // amenity: [],
+  // price: "",
+  featuredImg: "",
+  country: "",
+  zip: "",
+};
+// export const initialListing = {
+//   renter_id: 2,
+//   title: "Cozy apartment, great location",
+//   location: "Brooklyn Bridge",
+//   type: 1,
+//   country: "USA",
+//   state: "NY",
+//   city: "Brooklyn",
+//   street_address: "96 1st PI APT 2",
+//   zip: 11231,
+//   bedrooms: 1,
+//   beds: 1,
+//   baths: 1,
+//   guests: 2,
+//   description:
+//     "This is a very comfortable apartment for a trip to NY, with quick access to the city",
+//   featuredImg:
+//     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F95%2Fe2%2F06%2F95e206c8904587736afe57edc1c9695b.jpg&f=1&nofb=1",
+// };
