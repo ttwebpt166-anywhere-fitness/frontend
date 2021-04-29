@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Form, FormGroup, Input, Label, Button } from "reactstrap";
 import * as yup from "yup";
-import axios from "axios";
 
-const ClientRegisterForm = ({ submitClientReg }) => {
+const ClientRegisterForm = (props) => {
   const [formState, setFormState] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    zipcode: "",
+    username: "",
     password: "",
-    confirmpassword: "",
+    confirmPassword: "",
     terms: "",
   });
 
@@ -21,23 +18,18 @@ const ClientRegisterForm = ({ submitClientReg }) => {
     zipcode: "",
     createUsername: "",
     password: "",
-    confirmpassword: "",
-    terms: "",
+    confirmPassword: "",
+    terms: false,
   });
 
-  const [disabled, setDisabled] = useState(true);
-
+  const [formIsValid, setFormValid] = useState(false);
   const clientRegisterSchema = yup.object().shape({
-    firstname: yup.string().required("First name is required!"),
-    lastname: yup.string().required("Last name is required!"),
-    email: yup.string().required("Email is required!"),
-    zipcode: yup.string().required("Zipcode is required!"),
-    createUsername: yup.string().required("Create a username to login!"),
+    username: yup.string().required("Create a username to login!"),
     password: yup
       .string()
       .required("Password is required!")
       .min(6, "Password must be 6 chars long"),
-    confirmpassword: yup
+    confirmPassword: yup
       .string()
       .required("Please reenter your password to confirm!"),
     terms: yup
@@ -61,114 +53,47 @@ const ClientRegisterForm = ({ submitClientReg }) => {
   useEffect(() => {
     clientRegisterSchema.isValid(formState).then((valid) => {
       console.log("valid?", valid);
-      setDisabled(!valid);
+      setFormValid(valid);
     });
   }, [formState]);
 
   const handleChange = (event) => {
     event.persist();
-    validateChange(event);
-    if (event.target.name === true) {
+    if (event.target.name === "terms") {
+      setFormState({ ...formState, terms: !formState.terms });
+    } else if (event.target.name) {
+      validateChange(event);
       setFormState({ ...formState, [event.target.name]: event.target.value });
     }
     //else false
   };
 
-  const [post, setPost] = useState([]);
   const handleSubmit = (event) => {
     event.preventDefault();
-    submitClientReg(formState);
-    submitClientReg(formState);
+    if (formIsValid) {
+      console.log({
+        username: formState.username,
+        password: formState.password,
+        isTeacher: formState.isTeacher,
+      });
+    }
     setFormState({
-      firstname: "",
-      lastname: "",
-      email: "",
-      zipcode: "",
       createUsername: "",
       password: "",
-      confirmpassword: "",
+      confirmPassword: "",
       terms: "",
     });
-
-    axios
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
-      .then((response) => {
-        setPost(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <h1>Returning Client</h1>
       <FormGroup>
-        <Label htmlFor="firstname">First Name</Label>
-        <Input
-          type="text"
-          name="firstname"
-          id="firstname"
-          placeholder="First Name"
-          value={formState.firstname}
-          onChange={handleChange}
-          cy-data="firstname"
-        />
-        {error.name.length > 0 ? (
-          <p className="error">{errors.firstname}</p>
-        ) : null}
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="lastname">Last Name</Label>
-        <Input
-          type="text"
-          name="lastname"
-          id="lastname"
-          placeholder="Last Name"
-          value={formState.lastname}
-          onChange={handleChange}
-          cy-data="lastname"
-        />
-        {error.name.length > 0 ? (
-          <p className="error">{errors.lastname}</p>
-        ) : null}
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="email">Email</Label>
-        <Input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-          value={formState.email}
-          onChange={handleChange}
-          cy-data="email"
-        />
-        {errors.email.length > 0 ? (
-          <p className="error">{errors.email}</p>
-        ) : null}
-      </FormGroup>
-      <FormGroup>
-        <Label htmlFor="zipcode">Zipcode</Label>
-        <Input
-          type="zipcode"
-          name="zipcode"
-          id="zipcode"
-          placeholder="zipcode"
-          value={formState.zipcode}
-          onChange={handleChange}
-          cy-data="zipcode"
-        />
-        {errors.zipcode.length > 0 ? (
-          <p className="error">{errors.zipcode}</p>
-        ) : null}
-      </FormGroup>
-      <FormGroup>
         <Label htmlFor="createUsername">Create a Username</Label>
         <Input
           type="username"
-          name="createUsername"
+          // username
+          name="username"
           id="createUsername"
           placeholder="Create a Username"
           value={formState.createUsername}
@@ -201,18 +126,19 @@ const ClientRegisterForm = ({ submitClientReg }) => {
           name="confirmPassword"
           id="confirmPassword"
           placeholder="Confirm Password"
-          value={formState.confirmpassword}
+          value={formState.confirmPassword}
           onChange={handleChange}
           cy-data="confirmPassword"
         />
-        {errors.confirmpassword.length > 0 ? (
-          <p className="error">{errors.confirmpassword}</p>
+        {errors.confirmPassword.length > 0 ? (
+          <p className="error">{errors.confirmPassword}</p>
         ) : null}
       </FormGroup>
       <FormGroup check>
         <Label check>
           <Input
             type="checkbox"
+            checked={formState.terms}
             onChange={handleChange}
             name="terms"
             cy-data="terms"
@@ -220,7 +146,7 @@ const ClientRegisterForm = ({ submitClientReg }) => {
           I agree to the Terms of Service
         </Label>
       </FormGroup>
-      <Button type="submit" disabled={disabled} cy-data="submit">
+      <Button type="submit" disabled={!formIsValid} cy-data="submit">
         Register
       </Button>
     </Form>

@@ -1,13 +1,70 @@
+* {
+  box-sizing: border-box;
+}
+
+.customJumbotron {
+  padding-left: 1em !important;
+  padding-right: 1em !important;
+  background-image: url('./assets//images//fitness2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  max-height: 100vh;
+  max-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0 !important;
+  min-height: fit-content !important;
+  max-height: unset;
+}
+
+.customJumbotron .customJumbotron_par {
+  font-weight: 500;
+  color: white;
+  background-color: #343a40cf;
+  padding: 1em;
+  border-radius: 30px;
+  line-height: 2em;
+  font-size: 1.5em;
+  max-width: 80%;
+  text-align: center;
+}
+
+.squares {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+}
+
+.square {
+  text-align: center;
+  padding: 1em 0;
+  color: white;
+}
+.square a {
+  color: white;
+  text-decoration: underline;
+}
+
+#square-a {
+  background-color: #9a000088;
+}
+#square-b {
+  background-color: #343a40cf;
+}
+#square-c {
+  background-color: #9a000088;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

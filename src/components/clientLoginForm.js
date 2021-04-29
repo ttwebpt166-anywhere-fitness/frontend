@@ -63,15 +63,7 @@ const ClientLoginForm = ({ submitClient }) => {
       password: "",
     });
 
-    axios
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
-      .then((response) => {
-        setPost(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(formState);
   };
 
   return (
@@ -88,19 +80,28 @@ const ClientLoginForm = ({ submitClient }) => {
           onChange={handleChange}
           cy-data="username"
         />
-        {error.name.length > 0 ? (
+        {errors.name.length > 0 ? (
           <p className="error">{errors.username}</p>
         ) : null}
       </FormGroup>
       <FormGroup>
         <Label htmlFor="password">Password</Label>
-        type='password' name='password' id='password' placeholder='Password'
-        value={formState.password}
-        onChange={handleChange}
-        cy-data='password' />
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          value={formState.password}
+          onChange={handleChange}
+          cy-data="password"
+        />
         {errors.password.length > 0 ? (
           <p className="error">{errors.password}</p>
         ) : null}
+      </FormGroup>
+      <FormGroup>
+        <Label type>Are you a teacher?</Label>
+        <Input type="checkbox" />
       </FormGroup>
       <Button type="submit" disabled={disabled} cy-data="submit">
         Login
