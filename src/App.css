@@ -11,7 +11,7 @@ body {
 }
 
 .App {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -61,7 +61,7 @@ header a.active {
   font-size: 80px;
   color: #e36414;
 }
-#subhead{
+#subhead {
   margin-top: 50px;
   font-weight: bold;
   font-size: 40px;

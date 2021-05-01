@@ -1,26 +1,26 @@
 // Import Dependencies
 import React, { useEffect, useState } from "react";
 // import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // Import Components
 import ClassCard from "./ClassCard";
-import { fetchData } from "../actions/index";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 
 const Classes = (props) => {
-  console.log("props", props);
-  const { fetchData } = props;
+  const user = useSelector((state) => state.user.data?.user);
+  const history = useHistory();
+  useEffect(() => {
+    // console.log(user);
+    if (!user) {
+      history.replace("/auth/login");
+    }
+  }, []);
   // Setup the state that will get the classes
   const [classes, setClasses] = useState([]);
 
   // Set a state to disable buttons when it is deleting
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Function used to gather the classes whenever component loads
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   // Function for deleting a listing
   const deleteListing = (id) => {
@@ -58,8 +58,8 @@ const Classes = (props) => {
     <div id="classes">
       <div className="heading">
         <h3>
-          Classes - {props.classes.length}{" "}
-          {props.classes.length > 1 ? "classes" : "listing"} found
+          Classes - {classes.length}{" "}
+          {classes.length > 1 ? "classes" : "listing"} found
         </h3>
 
         <Link to="/AddClass">
@@ -67,8 +67,8 @@ const Classes = (props) => {
         </Link>
       </div>
 
-      {props.classes.length > 0 &&
-        props.classes.map((listing, index) => {
+      {classes.length > 0 &&
+        classes.map((listing, index) => {
           const delayTimer = index;
 
           return (
@@ -82,14 +82,11 @@ const Classes = (props) => {
           );
         })}
 
-      {props.classes.length <= 0 && (
+      {classes.length <= 0 && (
         <p style={{ textAlign: "center" }}>No Classes Found</p>
       )}
     </div>
   );
 };
-const mapStateToProps = (state) => ({
-  classes: state,
-});
 
-export default connect(mapStateToProps, { fetchData })(Classes);
+export default Classes;

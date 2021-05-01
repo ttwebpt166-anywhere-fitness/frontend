@@ -1,9 +1,15 @@
 // Import dependencies
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { gsap } from "gsap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { fetchData } from "../actions";
+const useThunkDispatch = () => useDispatch();
 
 export default function Homepage() {
+  const dispatch = useThunkDispatch();
+  const history = useHistory();
+  const user = useSelector((state) => state);
   // Animations on render
   // useEffect(() => {
   //   gsap.from(".slide", {
@@ -26,6 +32,13 @@ export default function Homepage() {
   //     delay: 2,
   //   });
   // });
+  useEffect(() => {
+    console.log("fetching");
+    dispatch(fetchData());
+    if (!!user.user) {
+      history.push("/classes");
+    }
+  }, []);
 
   return (
     <div>

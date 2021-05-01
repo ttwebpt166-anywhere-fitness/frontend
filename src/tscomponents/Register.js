@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Form, FormGroup, Input, Label, Button } from "reactstrap";
 import * as yup from "yup";
-import {axiosWithAuth} from "../utilities/axiosWithAuth";
+import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Registration = () => {
   const { push } = useHistory();
+
+  const dispatch = useDispatch();
 
   const [user, setUser] = useState({
     username: "",
@@ -57,7 +60,11 @@ const Registration = () => {
     e.preventDefault();
 
     axiosWithAuth()
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
+      .post("/auth/register", {
+        username: user.username,
+        password: user.password,
+        isTeacher: !!user.instructorCode,
+      })
       .then((res) => {
         console.log("New User from Registration", res.data);
         setUser({
@@ -65,7 +72,8 @@ const Registration = () => {
           password: "",
           instructorCode: "",
         });
-        push("/auth/login");
+        dispatch({ type: "LOGGING_IN", payload: res.data });
+        push("/");
       })
       .catch((error) => {
         console.log(error.message);
