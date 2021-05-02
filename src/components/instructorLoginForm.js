@@ -42,7 +42,7 @@ const InstructorLoginForm = ({ submitInstructor }) => {
       console.log("valid?", valid);
       setDisabled(!valid);
     });
-  }, [formState]);
+  }, [formState,instructorLoginSchema]);
 
   const handleChange = (event) => {
     event.persist();
@@ -64,7 +64,7 @@ const InstructorLoginForm = ({ submitInstructor }) => {
     });
 
     axios
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
+      .post("https://anywhere-fitness-server.herokuapp.com/v1/", post)
       .then((response) => {
         setPost(response.data);
         console.log(response.data);
@@ -89,7 +89,7 @@ const InstructorLoginForm = ({ submitInstructor }) => {
           cy-data="instructorId"
         />
 
-        {error.name.length > 0 ? (
+        {errors.name.length > 0 ? (
           <p className="error">{errors.instructorId}</p>
         ) : null}
       </FormGroup>

@@ -63,7 +63,7 @@ const ClientRegisterForm = ({ submitClientReg }) => {
       console.log("valid?", valid);
       setDisabled(!valid);
     });
-  }, [formState]);
+  }, [formState, clientRegisterSchema]);
 
   const handleChange = (event) => {
     event.persist();
@@ -91,7 +91,7 @@ const ClientRegisterForm = ({ submitClientReg }) => {
     });
 
     axios
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
+      .post("https://anywhere-fitness-server.herokuapp.com/v1/", post)
       .then((response) => {
         setPost(response.data);
         console.log(response.data);
@@ -115,7 +115,7 @@ const ClientRegisterForm = ({ submitClientReg }) => {
           onChange={handleChange}
           cy-data="firstname"
         />
-        {error.name.length > 0 ? (
+        {errors.name.length > 0 ? (
           <p className="error">{errors.firstname}</p>
         ) : null}
       </FormGroup>
@@ -130,7 +130,7 @@ const ClientRegisterForm = ({ submitClientReg }) => {
           onChange={handleChange}
           cy-data="lastname"
         />
-        {error.name.length > 0 ? (
+        {errors.name.length > 0 ? (
           <p className="error">{errors.lastname}</p>
         ) : null}
       </FormGroup>
