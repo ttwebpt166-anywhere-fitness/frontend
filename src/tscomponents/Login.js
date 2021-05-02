@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import * as yup from "yup";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   // Declare a variable holding the default empty data
   const defaultUserData = { username: "", password: "" };
-
+  const dispatch = useDispatch();
   const { push } = useHistory();
   // Get the state to hold the form data
   const [user, setUser] = useState(defaultUserData);
@@ -57,11 +58,13 @@ export default function Login() {
   const handleSubmission = (e) => {
     e.preventDefault();
     // POST request
+    dispatch({ type: "LOGGING_IN" });
     axiosWithAuth()
-      .post("https://airbnb-best-price.herokuapp.com/login", user)
+      .post("/auth/login", user)
       .then((res) => {
         // Check response data for what to setItem to below
         console.log(res.data);
+        dispatch({ type: "LOGGING_SUCCESS", payload: res.data.user });
         localStorage.setItem("token", res.data.token);
         push("/classes");
       })
@@ -83,14 +86,6 @@ export default function Login() {
         // Clear the form
         setUser(defaultUserData);
       } else {
-        // Add a little animation if not valid
-        // const errorAnim = gsap.timeline({ repeat: 0, repeatDelay: 0 });
-        // errorAnim.to(".form-container", { x: -50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: -20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 0, duration: 0.2 });
-
         // Disable the submit button while the animation plays
         setDisableSubmit(true);
 

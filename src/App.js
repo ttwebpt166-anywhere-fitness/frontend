@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Login from "./tscomponents/Login";
 import Register from "./tscomponents/Register";
@@ -19,7 +19,7 @@ function App() {
       <div className="App">
         <Header />
 
-        <Switch>
+       
        
           <PrivateRoute exact path="/classes" component={Classes} />
           <Route exact path="/">
@@ -45,7 +45,7 @@ function App() {
           <Route path="/auth/register">
             <Register />
           </Route>
-        </Switch>
+       
       </div>
     </Router>
   );

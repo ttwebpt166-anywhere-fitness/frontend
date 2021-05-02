@@ -1,7 +1,6 @@
 // Import Dependencies
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-// import { gsap } from "gsap";
 
 import { Link } from "react-router-dom";
 
@@ -70,18 +69,6 @@ const CardDescription = styled.p`
   margin-left: 10px;
 `;
 
-// const CardPrice = styled.p`
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-
-//   @media (max-width: 800px) {
-//     position: static;
-//     margin-top: 25px;
-//     margin-bottom: 10px;
-//   }
-// `;
-
 const CardButtons = styled.div`
   position: absolute;
   bottom: 0;
@@ -112,7 +99,6 @@ const CardButton = styled.button`
 `;
 
 export default function ClassCard(props) {
-  //  Context provides the props
   console.log("props", props.fitClass.id);
 
   // Confirm first whether or not to delete fitClass

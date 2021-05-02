@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { sampleClass } from "./SampleClass";
 import * as yup from "yup";
-// import { gsap } from "gsap";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { fetchData } from "../actions";
 
@@ -59,7 +58,6 @@ const AddClass = () => {
     // Check for errors first
     formErrors();
 
-    console.log("hitting addClass");
 
     // Check if the form passes the validation
     formSchema.isValid(fitClass).then((valid) => {
@@ -68,12 +66,13 @@ const AddClass = () => {
       if (valid) {
         // Ensure to eliminate all errors if form is valid
         setErrors({});
-
+        console
+        .log(fitClass)
         // Submit the form
         axiosWithAuth()
-          .post("https://airbnb-best-price.herokuapp.com/api/rental/", fitClass)
-          // console
-          //   .log(fitClass)
+
+          .post("/class", fitClass)
+        
           .then((res) => {
             console.log("AddClass.js: post: res: ", res);
             fetchData();
