@@ -86,14 +86,6 @@ export default function Login() {
         // Clear the form
         setUser(defaultUserData);
       } else {
-        // Add a little animation if not valid
-        // const errorAnim = gsap.timeline({ repeat: 0, repeatDelay: 0 });
-        // errorAnim.to(".form-container", { x: -50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: -20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 0, duration: 0.2 });
-
         // Disable the submit button while the animation plays
         setDisableSubmit(true);
 

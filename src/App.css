@@ -7,7 +7,7 @@ input {
 }
 
 body {
-  background: red;
+  background: #f5f5f5;
 }
 
 .App {
@@ -29,12 +29,6 @@ header {
   border-bottom: #5f0f40 10px solid;
 }
 
-#logo {
-  display: flex;
-  height: 80px;
-  justify-content: center;
-  align-items: center;
-}
 
 header nav {
   display: flex;
@@ -119,7 +113,7 @@ header a.active {
   background: #0f4c5c;
 }
 
-/* Listing Styles */
+/* Class Styles */
 
 #classes {
   margin: 25px auto;
@@ -143,8 +137,18 @@ header a.active {
 }
 
 /* Form Styles */
+form{
+  display: flex;
+  flex-direction: column;
+  align-items:center
+}
 
+#button {
+  background-color: #0f4c5c;
+  color: #f5f5f5
+}
 .form-container {
+  
   border: 1px solid #ebebeb;
   padding: 20px;
   border-radius: 5px;

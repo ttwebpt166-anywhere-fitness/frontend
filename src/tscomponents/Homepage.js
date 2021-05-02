@@ -1,44 +1,23 @@
-// Import dependencies
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { gsap } from "gsap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchData } from "../actions";
 const useThunkDispatch = () => useDispatch();
 
 export default function Homepage() {
   const dispatch = useThunkDispatch();
-  const history = useHistory();
-  const user = useSelector((state) => state);
-  // Animations on render
-  // useEffect(() => {
-  //   gsap.from(".slide", {
-  //     opacity: 0,
-  //     scale: 0,
-  //     duration: 1,
-  //   });
+  // const history = useHistory();
+  // const user = useSelector((state) => state);
 
-  //   gsap.from(".layer-1", {
-  //     opacity: 0,
-  //     scale: 0,
-  //     duration: 1,
-  //     delay: 1,
-  //   });
-
-  //   gsap.from(".layer-2", {
-  //     opacity: 0,
-  //     y: 100,
-  //     duration: 1,
-  //     delay: 2,
-  //   });
-  // });
   useEffect(() => {
     console.log("fetching");
     dispatch(fetchData());
-    if (!!user.user) {
-      history.push("/classes");
-    }
-  }, []);
+    // if (!!user.user) {
+    //   console.log('if')
+    //   history.push("/classes");
+    // }
+  }, [dispatch]);
 
   return (
     <div>
