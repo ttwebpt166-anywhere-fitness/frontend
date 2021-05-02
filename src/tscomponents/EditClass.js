@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { sampleClass } from "./SampleClass";
 import * as yup from "yup";
 // import { gsap } from "gsap";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 
 export default function EditClass() {
-  const [fitClass, setClass] = useState(sampleClass);
-
+  const [fitClass, setClass] = useState(
+  {
+    name: "",
+    date: "",
+    duration: "",
+    intensity_level: "",
+    location: "",
+    max_attendees: undefined,
+    type: "",
+  })
   // Set the state for the errors for validation
   const [errors, setErrors] = useState([]);
 
@@ -22,7 +29,7 @@ export default function EditClass() {
       .then((res) => {
         console.log("EditClass.js:  res: ", res);
         // delete response.id;
-        setClass(sampleClass);
+        setClass(fitClass);
       })
       .catch((err) => console.error(`unable to getById # ${id}: `, err));
 
@@ -79,7 +86,7 @@ export default function EditClass() {
 
         // Submit the form
         axiosWithAuth()
-          .put("/",fitClass)
+          .put(`/:${id}`,fitClass)
           .then((res) => {
             console.log("Response from PUT;", res);
             push("/classes");
@@ -105,7 +112,7 @@ export default function EditClass() {
   };
   return (
     <div className="form-container">
-      <h3>Add A Class</h3>
+      <h3>Edit Class</h3>
 
       <form onSubmit={editClass}>
         <label
@@ -241,7 +248,7 @@ export default function EditClass() {
 
       <div>
           <button id="button" className="btn" type="submit" disabled={disableSubmit}>
-            Add Class
+           Edit 
           </button>
         </div>
       </form>
