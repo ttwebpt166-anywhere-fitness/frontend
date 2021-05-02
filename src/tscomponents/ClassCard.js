@@ -1,7 +1,6 @@
 // Import Dependencies
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-// import { gsap } from "gsap";
 
 import { Link } from "react-router-dom";
 
@@ -70,18 +69,6 @@ const CardDescription = styled.p`
   margin-left: 10px;
 `;
 
-// const CardPrice = styled.p`
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-
-//   @media (max-width: 800px) {
-//     position: static;
-//     margin-top: 25px;
-//     margin-bottom: 10px;
-//   }
-// `;
-
 const CardButtons = styled.div`
   position: absolute;
   bottom: 0;
@@ -111,72 +98,45 @@ const CardButton = styled.button`
   }
 `;
 
-export default function ListingCard(props) {
-  //  Context provides the props
-  console.log("props", props.listing.id);
+export default function ClassCard(props) {
+  console.log("props", props.fitClass.id);
 
-  // Confirm first whether or not to delete listing
+  // Confirm first whether or not to delete fitClass
   const confirmDeletion = () => {
     const prompt = window.confirm(
-      "Are you sure you want to delete this listing?"
+      "Are you sure you want to delete this fitClass?"
     );
 
     if (prompt === true) {
-      props.deleteListing(props.listing.id);
+      props.deleteClass(props.fitClass.id);
     }
   };
 
-  // Do a small animation when the component first renders
-  // useEffect(() => {
-  //   const delay = props.delay / 10 + 0.01;
-
-  //   gsap.from(`#listing-${props.listing.id}`, {
-  //     opacity: 0,
-  //     x: -100,
-  //     duration: 1,
-  //     delay: delay,
-  //   });
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <Card id={`listing-${props.listing.id}`} className="listing-wrapper">
-      <CardImg src={props.listing.featuredImg} alt={props.listing.title} />
+    <Card id={`fitClass-${props.fitClass.id}`} className="fitClass-wrapper">
+      <CardImg src={props.fitClass.featuredImg} alt={props.fitClass.title} />
 
       <CardInfo>
         <CardHeading>
-          {props.listing.type} in {props.listing.street_address},{" "}
-          {props.listing.city} {props.listing.state} by {props.listing.location}
+          {props.fitClass.type} in {props.fitClass.street_address},{" "}
+          {props.fitClass.start_time} {props.fitClass.state} by{" "}
+          {props.fitClass.location}
         </CardHeading>
-        <CardTitle>{props.listing.title}</CardTitle>
+        <CardTitle>{props.fitClass.title}</CardTitle>
 
         <TitleSeparator />
 
         <CardMeta>
-          {props.listing.guests} guests . {props.listing.bedrooms} bedrooms .{" "}
-          {props.listing.beds} beds . {props.listing.baths} baths
+          {props.fitClass.guests} guests . {props.fitClass.bedrooms} bedrooms .{" "}
+          {props.fitClass.beds} beds . {props.fitClass.baths} baths
         </CardMeta>
 
-        {/* <CardMeta>
-          {props.listing.amenity.map((amenity, index) => {
-            return (
-              <span key={index}>
-                {index ? " . " : ""} {amenity.amenity_name}
-              </span>
-            );
-          })}
-        </CardMeta> */}
-
-        {props.listing.description !== undefined && (
-          <CardDescription>{props.listing.description}</CardDescription>
+        {props.fitClass.description !== undefined && (
+          <CardDescription>{props.fitClass.description}</CardDescription>
         )}
-        {/* 
-        <CardPrice>
-          <span style={{ fontWeight: "bold" }}>${props.listing.price}</span> /
-          night
-        </CardPrice> */}
 
         <CardButtons>
-          <Link to={`/EditListing/${props.listing.id}`}>
+          <Link to={`/EditClass/${props.fitClass.id}`}>
             <CardButton disabled={props.isDeleting}>Edit</CardButton>
           </Link>
           <CardButton onClick={confirmDeletion} disabled={props.isDeleting}>

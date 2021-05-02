@@ -7,9 +7,13 @@ import { useDispatch } from "react-redux";
 
 const Registration = () => {
   const { push } = useHistory();
+<<<<<<< HEAD
 
   const dispatch = useDispatch();
 
+=======
+  const dispatch = useDispatch();
+>>>>>>> main
   const [user, setUser] = useState({
     username: "",
     password: "",
@@ -55,11 +59,12 @@ const Registration = () => {
     validateChange(e);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
+console.log('look', !!user.instructorCode)
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axiosWithAuth()
+<<<<<<< HEAD
       .post("/auth/register", {
         username: user.username,
         password: user.password,
@@ -77,8 +82,27 @@ const Registration = () => {
       })
       .catch((error) => {
         console.log(error.message);
+=======
+    .post("/auth/register", {
+      username: user.username,
+      password: user.password,
+      isTeacher: !!user.instructorCode,
+    })
+    .then((res) => {
+      console.log("New User from Registration", res.data);
+      setUser({
+        username: "",
+        password: "",
+        instructorCode: "",
+>>>>>>> main
       });
-  };
+      dispatch({ type: "LOGGING_IN", payload: res.data });
+      push("/");
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
+};
 
   return (
     <Form onSubmit={handleSubmit}>

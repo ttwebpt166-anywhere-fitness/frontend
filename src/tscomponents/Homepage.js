@@ -1,5 +1,5 @@
-// Import dependencies
 import React, { useEffect } from "react";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 // import { gsap } from "gsap";
 import { Link, useHistory } from "react-router-dom";
@@ -17,14 +17,21 @@ export default function Homepage() {
   //     scale: 0,
   //     duration: 1,
   //   });
+=======
+import { useDispatch } from "react-redux";
+// import { gsap } from "gsap";
+import { Link } from "react-router-dom";
+import { fetchData } from "../actions";
+const useThunkDispatch = () => useDispatch();
 
-  //   gsap.from(".layer-1", {
-  //     opacity: 0,
-  //     scale: 0,
-  //     duration: 1,
-  //     delay: 1,
-  //   });
+>>>>>>> main
 
+export default function Homepage() {
+  const dispatch = useThunkDispatch();
+  // const history = useHistory();
+  // const user = useSelector((state) => state);
+
+<<<<<<< HEAD
   //   gsap.from(".layer-2", {
   //     opacity: 0,
   //     y: 100,
@@ -39,6 +46,16 @@ export default function Homepage() {
       history.push("/classes");
     }
   }, []);
+=======
+  useEffect(() => {
+    console.log("fetching");
+    dispatch(fetchData());
+    // if (!!user.user) {
+    //   console.log('if')
+    //   history.push("/classes");
+    // }
+  }, [dispatch]);
+>>>>>>> main
 
   return (
     <div>
