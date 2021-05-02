@@ -42,15 +42,12 @@ const ClientLoginForm = ({ submitClient }) => {
       console.log("valid?", valid);
       setDisabled(!valid);
     });
-  }, [formState]);
+  }, [formState, clientLoginSchema]);
 
   const handleChange = (event) => {
     event.persist();
     validateChange(event);
-    if (event.target.name === true) {
       setFormState({ ...formState, [event.target.name]: event.target.value });
-    }
-    //else false
   };
   const [post, setPost] = useState([]);
 
@@ -64,7 +61,7 @@ const ClientLoginForm = ({ submitClient }) => {
     });
 
     axios
-      .post("https://anywhere-fitness-server.herokuapp.com/v1/", user)
+      .post("https://anywhere-fitness-server.herokuapp.com/v1/", post)
       .then((response) => {
         setPost(response.data);
         console.log(response.data);
@@ -88,16 +85,21 @@ const ClientLoginForm = ({ submitClient }) => {
           onChange={handleChange}
           cy-data="username"
         />
-        {error.name.length > 0 ? (
+        {errors.name.length > 0 ? (
           <p className="error">{errors.username}</p>
         ) : null}
       </FormGroup>
       <FormGroup>
         <Label htmlFor="password">Password</Label>
-        type='password' name='password' id='password' placeholder='Password'
-        value={formState.password}
-        onChange={handleChange}
-        cy-data='password' />
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          value={formState.password}
+          onChange={handleChange}
+          cy-data="password"
+        />
         {errors.password.length > 0 ? (
           <p className="error">{errors.password}</p>
         ) : null}

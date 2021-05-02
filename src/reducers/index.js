@@ -36,14 +36,11 @@ function userReducer(state = initialState, action) {
     case ADD_CLASS:
       return {
         ...state,
-        smurfs: [
-          ...state.smurfs,
+        newClass: [
+          ...state.newClass,
           {
             id: Date.now(),
-            name: action.payload.name,
-            nickname: action.payload.nickname,
-            position: action.payload.position,
-            description: action.payload.description,
+            
           },
         ],
       };

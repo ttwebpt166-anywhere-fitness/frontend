@@ -1,60 +1,53 @@
-import React, { useState, useEffect } from "react";
-import clientLoginForm from "./components/clientLoginForm";
-import clientRegisterForm from "./components/clientRegisterForm";
-import instructorLoginForm from "./components/instructorLoginForm";
-import instructorRegisterForm from "./components/instructorRegisterForm";
-import { Container, Button } from "reactstrap";
-import { axiosWithAuth } from "./utilities/axiosWithAuth";
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Login from "./tscomponents/Login";
+import Register from "./tscomponents/Register";
+import Homepage from "./tscomponents/Homepage";
+import Header from "./tscomponents/Header";
+import Classes from "./tscomponents/Classes";
+import AddClass from "./tscomponents/AddClass";
+import EditClass from "./tscomponents/EditClass";
+
+import PrivateRoute from "./utilities/PrivateRoute";
+
 import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "./actions";
 
 function App() {
-  const [post, setPost] = useState([]);
-  const user = useSelector((state) => state.user);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    fetchData(dispatch);
-  }, [dispatch]);
-
-  const submitUser = (user) => {
-    axiosWithAuth
-      .get("/", user)
-      .then((response) => {
-        setPost(response.data);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
-    <Container className="App">
-      <h1>Anytime Fitness</h1>
-      <div className="Members">
-        <h2>Members</h2>
-        {/* <p>Loading: {user.isLoading + ""}</p>
-        <p>Username: {user.test}</p> */}
-        <Button a href={clientRegisterForm}>
-          {" "}
-          */} Create an Account
-        </Button>
-        <Button a href={clientLoginForm}>
-          Login
-        </Button>
+    <Router>
+      <div className="App">
+        <Header />
+
+       
+       
+          <PrivateRoute exact path="/classes" component={Classes} />
+          <Route exact path="/">
+            <Homepage />
+          </Route>
+
+          {/* <Route path="/classes">
+              <Classes />
+            </Route> */}
+
+          <Route path="/addClass">
+            <AddClass />
+          </Route>
+
+          <Route path="/editClass/:id">
+            <EditClass />
+          </Route>
+
+          <Route path="/auth/login">
+            <Login />
+          </Route>
+
+          <Route path="/auth/register">
+            <Register />
+          </Route>
+       
       </div>
-      <div className="Instructors">
-        <h2>Instructors</h2>
-        <Button a href={instructorRegisterForm}>
-          Set Up an Account
-        </Button>
-        <Button a href={instructorLoginForm}>
-          Login
-        </Button>
-      </div>
-    </Container>
+    </Router>
   );
 }
 
