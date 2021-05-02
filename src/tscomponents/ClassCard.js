@@ -58,10 +58,6 @@ const TitleSeparator = styled.hr`
   border: none;
 `;
 
-const CardMeta = styled.p`
-  font-style: italic;
-  color: #5f0f40;
-`;
 
 const CardDescription = styled.p`
   margin-bottom: 80px;

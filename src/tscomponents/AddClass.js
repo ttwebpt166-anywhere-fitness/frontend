@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { sampleClass } from "./SampleClass";
 import * as yup from "yup";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { fetchData } from "../actions";
