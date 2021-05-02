@@ -8,17 +8,17 @@ const useThunkDispatch = () => useDispatch();
 
 export default function Homepage() {
   const dispatch = useThunkDispatch();
-  const history = useHistory();
-  const user = useSelector((state) => state);
+  // const history = useHistory();
+  // const user = useSelector((state) => state);
 
   useEffect(() => {
     console.log("fetching");
     dispatch(fetchData());
-    if (!!user.user) {
-      console.log('if')
-      // history.push("/");
-    }
-  }, [dispatch,user.user,history]);
+    // if (!!user.user) {
+    //   console.log('if')
+    //   history.push("/classes");
+    // }
+  }, []);
 
   return (
     <div>

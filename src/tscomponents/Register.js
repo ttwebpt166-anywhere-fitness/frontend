@@ -53,7 +53,7 @@ const Registration = () => {
     validateChange(e);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-
+console.log('look', !!user.instructorCode)
   const handleSubmit = (e) => {
     e.preventDefault();
 
