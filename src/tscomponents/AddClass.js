@@ -28,11 +28,11 @@ const AddClass = () => {
   // Form schema to be used for form validation
   const formSchema = yup.object().shape({
     name: yup.string().required("Please enter a title."),
-    type: yup.string(),
-    date: yup.string(),
-    duration: yup.string(),
-    intensity_level: yup.string(),
-    location: yup.string(),
+    type: yup.string().required("Please enter a type"),
+    date: yup.string().required("Please enter a date"),
+    duration: yup.number().required("Please enter duration, must be a number."),
+    intensity_level: yup.string().required("Please enter intensity level"),
+    location: yup.string().required("Please enter a location"),
     max_attendees: yup
       .number()
       .typeError("Guests field must be a number")
@@ -191,7 +191,7 @@ const AddClass = () => {
         >
           Duration
           <input
-            type="text"
+            type="number"
             name="duration"
             id="duration"
             onChange={handleChange}

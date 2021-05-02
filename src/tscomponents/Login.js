@@ -56,7 +56,7 @@ export default function Login() {
 
   // Function to handle the form submission
   const handleSubmission = (e) => {
-    e.preventDefault();
+        e.preventDefault();
     // POST request
     dispatch({ type: "LOGGING_IN" });
     axiosWithAuth()
