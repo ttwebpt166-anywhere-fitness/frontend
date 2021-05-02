@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 // import { gsap } from "gsap";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { fetchData } from "../actions";
 const useThunkDispatch = () => useDispatch();
 
@@ -18,7 +18,7 @@ export default function Homepage() {
     //   console.log('if')
     //   history.push("/classes");
     // }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
