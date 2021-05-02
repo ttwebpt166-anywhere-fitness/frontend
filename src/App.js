@@ -7,7 +7,7 @@ import Homepage from "./tscomponents/Homepage";
 import Header from "./tscomponents/Header";
 import Classes from "./tscomponents/Classes";
 import AddClass from "./tscomponents/AddClass";
-import EditListing from "./tscomponents/EditClass";
+import EditClass from "./tscomponents/EditClass";
 
 import PrivateRoute from "./utilities/PrivateRoute";
 
@@ -20,7 +20,7 @@ function App() {
         <Header />
 
         <Switch>
-          {/* Will turn on private route after we have access to token. */}
+       
           <PrivateRoute exact path="/classes" component={Classes} />
           <Route exact path="/">
             <Homepage />
@@ -35,7 +35,7 @@ function App() {
           </Route>
 
           <Route path="/editClass/:id">
-            <EditListing />
+            <EditClass />
           </Route>
 
           <Route path="/auth/login">

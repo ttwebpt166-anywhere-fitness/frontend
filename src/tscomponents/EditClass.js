@@ -5,8 +5,8 @@ import * as yup from "yup";
 // import { gsap } from "gsap";
 import { axiosWithAuth } from "../utilities/axiosWithAuth";
 
-export default function EditListing() {
-  const [listing, setListing] = useState(sampleClass);
+export default function EditClass() {
+  const [fitClass, setClass] = useState(sampleClass);
 
   // Set the state for the errors for validation
   const [errors, setErrors] = useState([]);
@@ -21,27 +21,27 @@ export default function EditListing() {
     axiosWithAuth()
       .get(`https://airbnb-best-price.herokuapp.com/api/rental/${id}`)
       .then((res) => {
-        console.log("EditListing.js: useEffect: get: res: ", res);
+        console.log("EditClass.js: useEffect: get: res: ", res);
         var response = res.data;
         // delete response.id;
         delete response.amenity;
-        setListing(response);
+        setClass(response);
       })
       .catch((err) => console.error(`unable to getById # ${id}: `, err));
   }, [id]);
 
   const handleChange = (e) => {
     e.persist();
-    setListing({
-      ...listing,
+    setClass({
+      ...fitClass,
       [e.target.name]: e.target.value,
     });
   };
 
   // const handleAmenitiesChange = (e) => {
   //   const changedAmenities = e.target.value.split(",");
-  //   setListing({
-  //     ...listing,
+  //   setClass({
+  //     ...fitClass,
   //     amenity: changedAmenities,
   //   });
   // };
@@ -55,7 +55,7 @@ export default function EditListing() {
     type: yup.string(),
     location: yup.string(),
     street_address: yup.string().required("Please enter a street address"),
-    city: yup.string().required("Please enter a city"),
+    start_time: yup.string().required("Please enter a start_time"),
     state: yup.string().required("Please enter a state"),
     guests: yup
       .number()
@@ -87,15 +87,15 @@ export default function EditListing() {
     let allErrors = { ...errors };
 
     // Cycle through all data and check
-    for (const listingData in listing) {
+    for (const ClassData in fitClass) {
       yup
-        .reach(formSchema, listingData)
-        .validate(listing[listingData])
+        .reach(formSchema, ClassData)
+        .validate(fitClass[ClassData])
         .then((valid) => {
-          allErrors[`${listingData}`] = "";
+          allErrors[`${ClassData}`] = "";
         })
         .catch((err) => {
-          allErrors[`${listingData}`] = err.errors[0];
+          allErrors[`${ClassData}`] = err.errors[0];
         });
     }
 
@@ -110,7 +110,7 @@ export default function EditListing() {
     formErrors();
 
     // Check if the form passes the validation
-    formSchema.isValid(listing).then((valid) => {
+    formSchema.isValid(fitClass).then((valid) => {
       console.log("is my form valid?", valid);
 
       if (valid) {
@@ -121,7 +121,7 @@ export default function EditListing() {
         axiosWithAuth()
           .put(
             `https://airbnb-best-price.herokuapp.com/api/rental/${id}`,
-            listing
+            fitClass
           )
           .then((res) => {
             console.log("Response from PUT;", res);
@@ -148,10 +148,10 @@ export default function EditListing() {
       }
     });
   };
-  console.log("listing", listing);
+  console.log("fitClass", fitClass);
   return (
     <div className="form-container">
-      <h3>Edit Listing</h3>
+      <h3>Edit Class</h3>
 
       <form onSubmit={handleSubmit}>
         <label
@@ -169,7 +169,7 @@ export default function EditListing() {
             id="title"
             onChange={handleChange}
             placeholder="Enter a title"
-            value={listing.title}
+            value={fitClass.title}
           />
         </label>
 
@@ -188,7 +188,7 @@ export default function EditListing() {
             id="type"
             onChange={handleChange}
             placeholder="e.g., 'whole house', 'downstairs'"
-            value={listing.type}
+            value={fitClass.type}
           />
         </label>
 
@@ -207,7 +207,7 @@ export default function EditListing() {
             id="location"
             onChange={handleChange}
             placeholder="e.g. 'Central Park', 'Pines Shopping Center'"
-            value={listing.location}
+            value={fitClass.location}
           />
         </label>
 
@@ -226,14 +226,14 @@ export default function EditListing() {
             id="street_address"
             onChange={handleChange}
             placeholder="Enter street address"
-            value={listing.street_address}
+            value={fitClass.street_address}
           />
         </label>
 
         <label
-          htmlFor="city"
+          htmlFor="start_time"
           className={`${
-            errors.city !== "" && errors.city !== undefined
+            errors.start_time !== "" && errors.start_time !== undefined
               ? "invalid"
               : "valid"
           }`}
@@ -241,10 +241,10 @@ export default function EditListing() {
           City
           <input
             type="text"
-            name="city"
-            id="city"
+            name="start_time"
+            id="start_time"
             onChange={handleChange}
-            value={listing.city}
+            value={fitClass.start_time}
           />
         </label>
 
@@ -263,7 +263,7 @@ export default function EditListing() {
             id="state"
             onChange={handleChange}
             placeholder="e.g. 'FL', 'NY'"
-            value={listing.state}
+            value={fitClass.state}
           />
         </label>
 
@@ -282,7 +282,7 @@ export default function EditListing() {
             id="guests"
             onChange={handleChange}
             placeholder="# of Guests Allowed"
-            value={listing.guests}
+            value={fitClass.guests}
           />
         </label>
 
@@ -301,7 +301,7 @@ export default function EditListing() {
             id="bedrooms"
             onChange={handleChange}
             placeholder="# of Bedrooms"
-            value={listing.bedrooms}
+            value={fitClass.bedrooms}
           />
         </label>
 
@@ -320,7 +320,7 @@ export default function EditListing() {
             id="beds"
             onChange={handleChange}
             placeholder="# of Beds"
-            value={listing.beds}
+            value={fitClass.beds}
           />
         </label>
 
@@ -339,7 +339,7 @@ export default function EditListing() {
             id="baths"
             onChange={handleChange}
             placeholder="# of Bathrooms"
-            value={listing.baths}
+            value={fitClass.baths}
           />
         </label>
 
@@ -358,7 +358,7 @@ export default function EditListing() {
             id="amenity"
             onChange={handleAmenitiesChange}
             placeholder="Comma separated e.g., 'wifi, kitchen, pool"
-            value={listing.amenity}
+            value={fitClass.amenity}
           />
         </label> */}
         {/* 
@@ -377,7 +377,7 @@ export default function EditListing() {
             id="price"
             onChange={handleChange}
             placeholder="Enter price per night"
-            value={listing.price}
+            value={fitClass.price}
           />
         </label> */}
 
@@ -396,7 +396,7 @@ export default function EditListing() {
             id="featuredImg"
             onChange={handleChange}
             placeholder="Image URL"
-            value={listing.featuredImg}
+            value={fitClass.featuredImg}
           />
         </label>
 
@@ -414,13 +414,13 @@ export default function EditListing() {
             name="description"
             id="description"
             onChange={handleChange}
-            value={listing.description}
+            value={fitClass.description}
           />
         </label>
 
         <div>
           <button className="btn" type="submit" disabled={disableSubmit}>
-            Edit Listing
+            Edit Class
           </button>
         </div>
       </form>

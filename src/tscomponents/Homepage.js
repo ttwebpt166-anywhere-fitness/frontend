@@ -1,31 +1,10 @@
 // Import dependencies
 import React, { useEffect } from "react";
-// import { gsap } from "gsap";
+
 import { Link } from "react-router-dom";
 
 export default function Homepage() {
-  // Animations on render
-  // useEffect(() => {
-  //   gsap.from(".slide", {
-  //     opacity: 0,
-  //     scale: 0,
-  //     duration: 1,
-  //   });
-
-  //   gsap.from(".layer-1", {
-  //     opacity: 0,
-  //     scale: 0,
-  //     duration: 1,
-  //     delay: 1,
-  //   });
-
-  //   gsap.from(".layer-2", {
-  //     opacity: 0,
-  //     y: 100,
-  //     duration: 1,
-  //     delay: 2,
-  //   });
-  // });
+ 
 
   return (
     <div>

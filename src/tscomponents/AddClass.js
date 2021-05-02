@@ -7,7 +7,7 @@ import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { fetchData } from "../actions";
 
 const AddClass = () => {
-  const [listing, setListing] = useState(sampleClass);
+  const [fitClass, setClass] = useState(sampleClass);
 
   // Set the state for the errors for validation
   const [errors, setErrors] = useState([]);
@@ -19,36 +19,16 @@ const AddClass = () => {
 
   // Form schema to be used for form validation
   const formSchema = yup.object().shape({
-    id: yup.string(),
-    renter_id: yup.string(),
-    title: yup.string().required("Please enter a title."),
-    description: yup.string(),
+    name: yup.string().required("Please enter a title."),
     type: yup.string(),
+    start_time: yup.string(),
+    duration: yup.string(),
+    intensity: yup.string(),
     location: yup.string(),
-    street_address: yup.string().required("Please enter a street address"),
-    city: yup.string().required("Please enter a city"),
-    state: yup.string().required("Please enter a state"),
-    guests: yup
+    maxSize: yup
       .number()
       .typeError("Guests field must be a number")
       .required("Please enter guests number."),
-    bedrooms: yup
-      .number()
-      .typeError("Bedrooms field must be a number")
-      .required("Please enter bedrooms number."),
-    beds: yup
-      .number()
-      .typeError("Beds field must be a number")
-      .required("Please enter beds number."),
-    baths: yup
-      .number()
-      .typeError("Baths field must be a number")
-      .required("Please enter baths number."),
-    // amenity: yup.string(),
-    // price: yup.number().typeError("Price field must be a number"),
-    featuredImg: yup.string(),
-    country: yup.string(),
-    zip: yup.number(),
   });
 
   // Form to catch any errors if the form did not validated
@@ -57,15 +37,15 @@ const AddClass = () => {
     let allErrors = { ...errors };
 
     // Cycle through all data and check
-    for (const listingData in listing) {
+    for (const ClassData in fitClass) {
       yup
-        .reach(formSchema, listingData)
-        .validate(listing[listingData])
+        .reach(formSchema, ClassData)
+        .validate(fitClass[ClassData])
         .then((valid) => {
-          allErrors[`${listingData}`] = "";
+          allErrors[`${ClassData}`] = "";
         })
         .catch((err) => {
-          allErrors[`${listingData}`] = err.errors[0];
+          allErrors[`${ClassData}`] = err.errors[0];
         });
     }
 
@@ -82,7 +62,7 @@ const AddClass = () => {
     console.log("hitting addClass");
 
     // Check if the form passes the validation
-    formSchema.isValid(listing).then((valid) => {
+    formSchema.isValid(fitClass).then((valid) => {
       console.log("is my form valid?", valid);
 
       if (valid) {
@@ -91,9 +71,9 @@ const AddClass = () => {
 
         // Submit the form
         axiosWithAuth()
-          .post("https://airbnb-best-price.herokuapp.com/api/rental/", listing)
+          .post("https://airbnb-best-price.herokuapp.com/api/rental/", fitClass)
           // console
-          //   .log(listing)
+          //   .log(fitClass)
           .then((res) => {
             console.log("AddClass.js: post: res: ", res);
             fetchData();
@@ -101,15 +81,6 @@ const AddClass = () => {
           })
           .catch((err) => console.error("err from AddClass", err));
       } else {
-        // Add a little animation if not valid
-        // const errorAnim = gsap.timeline({ repeat: 0, repeatDelay: 0 });
-        // errorAnim.to(".form-container", { x: -50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 50, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: -20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 20, duration: 0.2 });
-        // errorAnim.to(".form-container", { x: 0, duration: 0.2 });
-
-        // Disable the submit button while the animation plays
         setDisableSubmit(true);
 
         setTimeout(() => {
@@ -119,22 +90,15 @@ const AddClass = () => {
     });
   };
   const handleChange = (e) => {
-    setListing({
-      ...listing,
+    setClass({
+      ...fitClass,
       [e.target.name]: e.target.value,
     });
   };
-  // const handleAmenitiesChange = (e) => {
-  //   const changedAmenities = e.target.value.split(",");
-  //   setListing({
-  //     ...listing,
-  //     amenity: changedAmenities,
-  //   });
-  // };
 
   return (
     <div className="form-container">
-      <h3>Add A Listing</h3>
+      <h3>Add A Class</h3>
 
       <form onSubmit={addClass}>
         <label
@@ -145,14 +109,14 @@ const AddClass = () => {
               : "valid"
           }`}
         >
-          Title
+          Class
           <input
             type="text"
-            name="title"
-            id="title"
+            name="name"
+            id="name"
             onChange={handleChange}
-            placeholder="Enter a title"
-            value={listing.title}
+            placeholder="Enter a class name"
+            value={fitClass.name}
           />
         </label>
 
@@ -170,26 +134,8 @@ const AddClass = () => {
             name="type"
             id="type"
             onChange={handleChange}
-            placeholder="e.g., 'whole house', 'downstairs'"
-            value={listing.type}
-          />
-        </label>
-        <label
-          htmlFor="country"
-          className={`${
-            errors.type !== "" && errors.type !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Country
-          <input
-            type="text"
-            name="country"
-            id="country"
-            onChange={handleChange}
-            placeholder="Country"
-            value={listing.country}
+            placeholder="e.g., 'cardio', 'stretch', 'body-weight'"
+            value={fitClass.type}
           />
         </label>
 
@@ -201,245 +147,94 @@ const AddClass = () => {
               : "valid"
           }`}
         >
-          Relative Location
+          Location
           <input
             type="text"
             name="location"
             id="location"
             onChange={handleChange}
             placeholder="e.g. 'Central Park', 'Pines Shopping Center'"
-            value={listing.location}
+            value={fitClass.location}
           />
         </label>
 
         <label
-          htmlFor="street_address"
+          htmlFor="start_time"
           className={`${
-            errors.street_address !== "" && errors.street_address !== undefined
+            errors.start_time !== "" && errors.start_time !== undefined
               ? "invalid"
               : "valid"
           }`}
         >
-          Address
+          Start Time
           <input
             type="text"
-            name="street_address"
-            id="street_address"
+            name="start_time"
+            id="start_time"
             onChange={handleChange}
-            placeholder="Enter street address"
-            value={listing.street_address}
+            value={fitClass.start_time}
           />
         </label>
 
         <label
-          htmlFor="city"
+          htmlFor="duration"
           className={`${
-            errors.city !== "" && errors.city !== undefined
+            errors.duration !== "" && errors.duration !== undefined
               ? "invalid"
               : "valid"
           }`}
         >
-          City
+          Duration
           <input
             type="text"
-            name="city"
-            id="city"
+            name="duration"
+            id="duration"
             onChange={handleChange}
-            value={listing.city}
-          />
-        </label>
-
-        <label
-          htmlFor="state"
-          className={`${
-            errors.state !== "" && errors.state !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          State
-          <input
-            type="text"
-            name="state"
-            id="state"
-            onChange={handleChange}
-            placeholder="e.g. 'FL', 'NY'"
-            value={listing.state}
+            placeholder="30min, 90min, etc."
+            value={fitClass.duration}
           />
         </label>
         <label
-          htmlFor="zip"
+          htmlFor="duration"
           className={`${
-            errors.state !== "" && errors.state !== undefined
+            errors.duration !== "" && errors.duration !== undefined
               ? "invalid"
               : "valid"
           }`}
         >
-          Zip Code
+         Intensity 
           <input
-            type="number"
-            name="zip"
-            id="zip"
+            type="text"
+            name="intensity"
+            id="intensity"
             onChange={handleChange}
-            placeholder="Zip Code"
-            value={listing.zip}
+            placeholder="beginner, advanced, low-impact"
+            value={fitClass.intensity}
           />
         </label>
 
         <label
           htmlFor="guests"
           className={`${
-            errors.guests !== "" && errors.guests !== undefined
+            errors.intensity !== "" && errors.intensity !== undefined
               ? "invalid"
               : "valid"
           }`}
         >
-          Guests
+          Maximum Class Size
           <input
             type="number"
-            name="guests"
-            id="guests"
+            name="maxSize"
+            id="maxSize"
             onChange={handleChange}
-            placeholder="# of Guests Allowed"
-            value={listing.guests}
+            placeholder="Max number of clients"
+            value={fitClass.maxSize}
           />
         </label>
 
-        <label
-          htmlFor="bedrooms"
-          className={`${
-            errors.bedrooms !== "" && errors.bedrooms !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Bedrooms
-          <input
-            type="number"
-            name="bedrooms"
-            id="bedrooms"
-            onChange={handleChange}
-            placeholder="# of Bedrooms"
-            value={listing.bedrooms}
-          />
-        </label>
-
-        <label
-          htmlFor="beds"
-          className={`${
-            errors.beds !== "" && errors.beds !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Beds
-          <input
-            type="number"
-            name="beds"
-            id="beds"
-            onChange={handleChange}
-            placeholder="# of Beds"
-            value={listing.beds}
-          />
-        </label>
-
-        <label
-          htmlFor="baths"
-          className={`${
-            errors.baths !== "" && errors.baths !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Bathrooms
-          <input
-            type="number"
-            name="baths"
-            id="baths"
-            onChange={handleChange}
-            placeholder="# of Bathrooms"
-            value={listing.baths}
-          />
-        </label>
-
-        {/* <label
-          htmlFor="amenity"
-          className={`${
-            errors.amenity !== "" && errors.amenity !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Amenities
-          <input
-            type="text"
-            name="amenity"
-            id="amenity"
-            onChange={handleAmenitiesChange}
-            placeholder="Comma separated e.g., 'wifi, kitchen, pool"
-            value={listing.amenity}
-          />
-        </label> */}
-
-        {/* <label
-          htmlFor="price"
-          className={`${
-            errors.price !== "" && errors.price !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Price
-          <input
-            type="number"
-            name="price"
-            id="price"
-            onChange={handleChange}
-            placeholder="Enter price per night"
-            value={listing.price}
-          />
-        </label> */}
-
-        <label
-          htmlFor="featuredImg"
-          className={`${
-            errors.featuredImg !== "" && errors.featuredImg !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Featured Image
-          <input
-            type="text"
-            name="featuredImg"
-            id="featuredImg"
-            onChange={handleChange}
-            placeholder="Image URL"
-            value={listing.featuredImg}
-          />
-        </label>
-
-        <label
-          htmlFor="description"
-          className={`${
-            errors.description !== "" && errors.description !== undefined
-              ? "invalid"
-              : "valid"
-          }`}
-        >
-          Description
-          <textarea
-            type="text"
-            name="description"
-            id="description"
-            onChange={handleChange}
-            value={listing.description}
-          />
-        </label>
-
-        <div>
-          <button className="btn" type="submit" disabled={disableSubmit}>
-            Add Listing
+      <div>
+          <button id="button" className="btn" type="submit" disabled={disableSubmit}>
+            Add Class
           </button>
         </div>
       </form>
