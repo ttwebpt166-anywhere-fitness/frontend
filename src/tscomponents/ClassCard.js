@@ -1,7 +1,7 @@
 // Import Dependencies
 import React from "react";
 import styled from "styled-components";
-
+import fitImage from "../fitness.jpg";
 import { Link } from "react-router-dom";
 
 // Styled Components
@@ -99,7 +99,7 @@ const CardButton = styled.button`
 `;
 
 export default function ClassCard(props) {
-  console.log("props", props.fitClass.id);
+  console.log("props", props.fitClass);
 
   // Confirm first whether or not to delete fitClass
   const confirmDeletion = () => {
@@ -114,22 +114,19 @@ export default function ClassCard(props) {
 
   return (
     <Card id={`fitClass-${props.fitClass.id}`} className="fitClass-wrapper">
-      <CardImg src={props.fitClass.featuredImg} alt={props.fitClass.title} />
+      <CardImg src={fitImage} alt={props.fitClass.name} />
 
       <CardInfo>
         <CardHeading>
-          {props.fitClass.type} in {props.fitClass.street_address},{" "}
-          {props.fitClass.start_time} {props.fitClass.state} by{" "}
+          {props.fitClass.intensity_level} - {props.fitClass.type}
+          <br />
+          {Date(props.fitClass.date)}
+          <br />
           {props.fitClass.location}
         </CardHeading>
-        <CardTitle>{props.fitClass.title}</CardTitle>
+        <CardTitle>{props.fitClass.name}</CardTitle>
 
         <TitleSeparator />
-
-        <CardMeta>
-          {props.fitClass.guests} guests . {props.fitClass.bedrooms} bedrooms .{" "}
-          {props.fitClass.beds} beds . {props.fitClass.baths} baths
-        </CardMeta>
 
         {props.fitClass.description !== undefined && (
           <CardDescription>{props.fitClass.description}</CardDescription>

@@ -6,7 +6,17 @@ import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { fetchData } from "../actions";
 
 const AddClass = () => {
-  const [fitClass, setClass] = useState(sampleClass);
+  const [fitClass, setClass] = useState({
+    name: "",
+    date: "",
+    duration: "",
+    intensity_level: "",
+    location: "",
+    max_attendees: undefined,
+    type: "",
+  });
+
+  console.log(fitClass);
 
   // Set the state for the errors for validation
   const [errors, setErrors] = useState([]);
@@ -20,11 +30,11 @@ const AddClass = () => {
   const formSchema = yup.object().shape({
     name: yup.string().required("Please enter a title."),
     type: yup.string(),
-    start_time: yup.string(),
+    date: yup.string(),
     duration: yup.string(),
-    intensity: yup.string(),
+    intensity_level: yup.string(),
     location: yup.string(),
-    maxSize: yup
+    max_attendees: yup
       .number()
       .typeError("Guests field must be a number")
       .required("Please enter guests number."),
@@ -58,7 +68,6 @@ const AddClass = () => {
     // Check for errors first
     formErrors();
 
-
     // Check if the form passes the validation
     formSchema.isValid(fitClass).then((valid) => {
       console.log("is my form valid?", valid);
@@ -66,13 +75,11 @@ const AddClass = () => {
       if (valid) {
         // Ensure to eliminate all errors if form is valid
         setErrors({});
-        console
-        .log(fitClass)
+        console.log(fitClass);
         // Submit the form
         axiosWithAuth()
-
           .post("/class", fitClass)
-        
+
           .then((res) => {
             console.log("AddClass.js: post: res: ", res);
             fetchData();
@@ -108,7 +115,7 @@ const AddClass = () => {
               : "valid"
           }`}
         >
-          Class
+          Class Name
           <input
             type="text"
             name="name"
@@ -167,11 +174,11 @@ const AddClass = () => {
         >
           Start Time
           <input
-            type="text"
-            name="start_time"
-            id="start_time"
+            type="datetime-local"
+            name="date"
+            id="date"
             onChange={handleChange}
-            value={fitClass.start_time}
+            value={fitClass.date}
           />
         </label>
 
@@ -201,21 +208,22 @@ const AddClass = () => {
               : "valid"
           }`}
         >
-         Intensity 
+          Intensity
           <input
             type="text"
-            name="intensity"
-            id="intensity"
+            name="intensity_level"
+            id="intensity_level"
             onChange={handleChange}
             placeholder="beginner, advanced, low-impact"
-            value={fitClass.intensity}
+            value={fitClass.intensity_level}
           />
         </label>
 
         <label
           htmlFor="guests"
           className={`${
-            errors.intensity !== "" && errors.intensity !== undefined
+            errors.intensity_level !== "" &&
+            errors.intensity_level !== undefined
               ? "invalid"
               : "valid"
           }`}
@@ -223,16 +231,22 @@ const AddClass = () => {
           Maximum Class Size
           <input
             type="number"
-            name="maxSize"
-            id="maxSize"
+            name="max_attendees"
+            id="max_attendees"
+            min="1"
             onChange={handleChange}
             placeholder="Max number of clients"
-            value={fitClass.maxSize}
+            value={fitClass.max_attendees}
           />
         </label>
 
-      <div>
-          <button id="button" className="btn" type="submit" disabled={disableSubmit}>
+        <div>
+          <button
+            id="button"
+            className="btn"
+            type="submit"
+            disabled={disableSubmit}
+          >
             Add Class
           </button>
         </div>

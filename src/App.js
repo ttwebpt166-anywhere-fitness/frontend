@@ -19,33 +19,30 @@ function App() {
       <div className="App">
         <Header />
 
-       
-       
-          <PrivateRoute exact path="/classes" component={Classes} />
-          <Route exact path="/">
-            <Homepage />
-          </Route>
+        <PrivateRoute exact path="/classes" component={Classes} />
+        <Route exact path="/">
+          <Homepage />
+        </Route>
 
-          {/* <Route path="/classes">
+        {/* <Route path="/classes">
               <Classes />
             </Route> */}
 
-          <Route path="/addClass">
-            <AddClass />
-          </Route>
+        <Route path="/addClass">
+          <AddClass />
+        </Route>
 
-          <Route path="/editClass/:id">
-            <EditClass />
-          </Route>
+        <Route path="/editClass/:id">
+          <EditClass />
+        </Route>
 
-          <Route path="/auth/login">
-            <Login />
-          </Route>
+        <Route path="/auth/login">
+          <Login />
+        </Route>
 
-          <Route path="/auth/register">
-            <Register />
-          </Route>
-       
+        <Route path="/auth/register">
+          <Register />
+        </Route>
       </div>
     </Router>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, FormGroup, Input, Label, Button } from "reactstrap";
 import * as yup from "yup";
-import {axiosWithAuth} from "../utilities/axiosWithAuth";
+import { axiosWithAuth } from "../utilities/axiosWithAuth";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -53,30 +53,30 @@ const Registration = () => {
     validateChange(e);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-console.log('look', !!user.instructorCode)
+  console.log("look", !!user.instructorCode);
   const handleSubmit = (e) => {
     e.preventDefault();
 
     axiosWithAuth()
-    .post("/auth/register", {
-      username: user.username,
-      password: user.password,
-      isTeacher: !!user.instructorCode,
-    })
-    .then((res) => {
-      console.log("New User from Registration", res.data);
-      setUser({
-        username: "",
-        password: "",
-        instructorCode: "",
+      .post("/auth/register", {
+        username: user.username,
+        password: user.password,
+        isTeacher: !!user.instructorCode,
+      })
+      .then((res) => {
+        console.log("New User from Registration", res.data);
+        setUser({
+          username: "",
+          password: "",
+          instructorCode: "",
+        });
+        dispatch({ type: "LOGGING_IN", payload: res.data });
+        push("/");
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
-      dispatch({ type: "LOGGING_IN", payload: res.data });
-      push("/");
-    })
-    .catch((error) => {
-      console.log(error.message);
-    });
-};
+  };
 
   return (
     <Form onSubmit={handleSubmit}>

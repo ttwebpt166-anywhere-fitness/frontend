@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { fetchData } from "../actions";
 const useThunkDispatch = () => useDispatch();
 
-
 export default function Homepage() {
   const dispatch = useThunkDispatch();
   // const history = useHistory();

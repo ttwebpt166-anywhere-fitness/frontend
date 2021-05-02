@@ -12,6 +12,7 @@ const Classes = (props) => {
     // if (!user) {
     //   history.replace("/auth/login");
     // }
+    getClasses();
   }, [history, user]);
   // Setup the state that will get the classes
   const [classes, setClasses] = useState([]);
@@ -19,6 +20,13 @@ const Classes = (props) => {
   // Set a state to disable buttons when it is deleting
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const getClasses = () => {
+    axiosWithAuth()
+      .get("/class")
+      .then((res) => {
+        setClasses(res.data);
+      });
+  };
   // Function for deleting a fitClass
   const deleteClass = (id) => {
     // Create a new array where the fitClass that matches the ID is removed
